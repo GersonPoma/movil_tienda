@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'core/theme/app_theme.dart';
-import 'providers/auth_provider.dart';
-import 'presentation/screens/auth/login_screen.dart';
-import 'presentation/screens/dashboard/home_screen.dart';
+import 'package:kreativ_flow/core/theme/app_theme.dart';
+import 'package:kreativ_flow/providers/auth_provider.dart';
+import 'package:kreativ_flow/providers/product_provider.dart';
+import 'package:kreativ_flow/providers/cart_provider.dart';
+import 'package:kreativ_flow/providers/supplier_provider.dart';
+import 'package:kreativ_flow/presentation/screens/auth/login_screen.dart';
+import 'package:kreativ_flow/presentation/screens/dashboard/home_screen.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => SupplierProvider()),
       ],
       child: const MyApp(),
     ),
@@ -27,8 +33,6 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: Consumer<AuthProvider>(
         builder: (context, authProvider, _) {
-          // Si está cargando al inicio, podríamos mostrar un splash
-          // Por el momento redirigimos al HomeScreen si está autenticado
           if (authProvider.isAuthenticated) {
             return const HomeScreen();
           } else {

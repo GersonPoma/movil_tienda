@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _usernameController,
                 decoration: const InputDecoration(
-                  labelText: 'Usuario',
+                  labelText: 'Correo / Usuario',
                   prefixIcon: Icon(Icons.person_outline),
                 ),
               ),
@@ -75,24 +75,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: authProvider.isLoading
                     ? null
                     : () async {
-                        final errorMessage = await authProvider.login(
+                        final result = await authProvider.login(
                           _usernameController.text,
                           _passwordController.text,
                         );
+                        
                         if (!context.mounted) return;
-                        if (errorMessage == null) {
+
+                        if (result['success'] == true) {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (_) => const HomeScreen()),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(errorMessage)),
+                            SnackBar(
+                              content: Text(result['message'].toString()),
+                              backgroundColor: Colors.red[700],
+                            ),
                           );
                         }
                       },
                 child: authProvider.isLoading
-                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white))
+                    ? const SizedBox(
+                        height: 20, 
+                        width: 20, 
+                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)
+                      )
                     : const Text('INICIAR SESIÓN'),
               ),
             ],

@@ -4,7 +4,7 @@ import '../../../data/services/supplier_service.dart';
 import 'supplier_form_screen.dart';
 
 class SupplierListScreen extends StatefulWidget {
-  const SupplierListScreen({Key? key}) : super(key: key);
+  const SupplierListScreen({super.key});
 
   @override
   State<SupplierListScreen> createState() => _SupplierListScreenState();

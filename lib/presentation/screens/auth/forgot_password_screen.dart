@@ -60,11 +60,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   if (result['success'] == true) {
                     setState(() => _currentStep = 2);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(result['mensaje'] ?? 'Código enviado')),
+                      SnackBar(content: Text(result['message'] ?? 'Código enviado')),
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(result['error'] ?? 'Error al solicitar código')),
+                      SnackBar(content: Text(result['message'] ?? 'Error al solicitar código')),
                     );
                   }
                 },
@@ -119,12 +119,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                   if (result['success'] == true) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Contraseña actualizada con éxito')),
+                      SnackBar(content: Text(result['message'] ?? 'Contraseña actualizada')),
                     );
                     Navigator.pop(context);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(result['error'] ?? 'Error al cambiar contraseña')),
+                      SnackBar(content: Text(result['message'] ?? 'Error al cambiar contraseña')),
                     );
                   }
                 },

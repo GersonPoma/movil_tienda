@@ -43,6 +43,3 @@ Una aplicación móvil moderna construida con Flutter para la gestión y visuali
    ```bash
    flutter run
    ```
-
----
-Desarrollado con ❤️ por el equipo de Kreativ Flow.

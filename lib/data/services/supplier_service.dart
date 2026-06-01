@@ -1,7 +1,7 @@
 import 'dart:convert';
-import '../../domain/models/supplier_model.dart';
-import 'api_service.dart';
-import '../../core/constants/api_constants.dart';
+import 'package:kreativ_flow/domain/models/supplier_model.dart';
+import 'package:kreativ_flow/data/services/api_service.dart';
+import 'package:kreativ_flow/core/constants/api_constants.dart';
 
 class SupplierService {
   final ApiService _apiService = ApiService();
