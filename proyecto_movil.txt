@@ -1,0 +1,86 @@
+========================================================================
+             ESTRUCTURA Y FUNCIONAMIENTO DEL PROYECTO MÓVIL
+========================================================================
+
+Este archivo detalla de forma sencilla la organización del proyecto 
+móvil desarrollado en Flutter (TiendaMóvil) y su interacción con el 
+backend en Django.
+
+------------------------------------------------------------------------
+1. ESTRUCTURA DE CAPAS (PATRÓN ARQUITECTÓNICO)
+------------------------------------------------------------------------
+La aplicación móvil separa su lógica en tres capas principales:
+
+* PRESENTACIÓN / VISTAS (lib/presentation/screens/)
+  Contiene las pantallas de la interfaz de usuario, organizadas por 
+  módulos funcionales (Autenticación, Inventario, Ventas, Reportes, 
+  Seguridad).
+
+* ESTADO / LOGICA DE NEGOCIO (lib/providers/)
+  Controla el flujo de datos y el estado de la aplicación mediante la
+  librería Provider. Cuando ocurre una acción o se cargan datos, el
+  proveedor notifica a las pantallas para redibujar la interfaz.
+
+* DATOS / MODELOS (lib/data/models/)
+  Define los objetos y estructuras de datos. Mapea las respuestas de
+  los servicios web en formato JSON a clases de Dart estructuradas
+  (ej. Producto, Venta, Usuario).
+
+------------------------------------------------------------------------
+2. DETALLE DE CARPETAS EN 'lib/'
+------------------------------------------------------------------------
+* lib/core/
+  - theme/app_theme.dart: Define la paleta de colores corporativa,
+    el diseño de botones, campos de texto y elementos visuales.
+
+* lib/data/models/
+  - models.dart: Archivo unificado de modelos (Producto, Variante, 
+    Venta, Usuario, etc.) autogenerados o mapeados a partir de JSON.
+
+* lib/providers/
+  - auth_provider.dart: Gestiona tokens JWT de inicio de sesión y roles.
+  - providers.dart: Agrupa los proveedores globales:
+    - InventarioProvider (gestión de productos, categorías, imágenes, 3D).
+    - SeguridadProvider (usuarios, roles y auditoría de bitácora).
+    - ComprasProvider (proveedores y abastecimiento).
+    - VentasProvider (registro de cobros y facturas en el backend).
+  - cart_provider.dart / product_provider.dart: Controla el catálogo 
+    de venta al cliente y el carrito de compras local.
+  - reportes_provider.dart: Maneja consultas en lenguaje natural (NLP) 
+    por texto y voz y filtros de base de datos.
+
+* lib/presentation/screens/
+  - auth/: Pantalla de Login.
+  - dashboard/home_screen.dart: Panel de bienvenida y estadísticas.
+  - inventario/: Lista de productos, detalles y visor interactivo 3D.
+  - ventas/: Historial de transacciones y carrito para registrar cobros.
+  - checkout/payment_screen.dart: Métodos de pago (Efectivo, Tarjeta, QR).
+  - reportes/: Reportes mediante entrada de voz o texto.
+  - seguridad/: Gestión de usuarios, roles e historial de bitácora.
+
+------------------------------------------------------------------------
+3. PRINCIPALES PAQUETES (DEPENDENCIAS) UTILIZADOS
+------------------------------------------------------------------------
+* provider: Para manejar el estado global de forma reactiva.
+* http: Cliente HTTP para consumir los endpoints REST de Django.
+* webview_flutter: Para renderizar el visor interactivo de modelos 3D.
+* url_launcher: Abre enlaces web e interactúa con ARCore (Scene Viewer)
+  para proyectar objetos en Realidad Aumentada nativa en celulares.
+* speech_to_text: Captura audio por micrófono para análisis de voz.
+* cached_network_image: Optimiza y almacena en caché las fotos de los 
+  productos desde el servidor.
+* image_picker: Permite seleccionar imágenes y fotos de la galería.
+* shared_preferences: Guarda el token de sesión y credenciales locales.
+
+------------------------------------------------------------------------
+4. FLUJO DE TRABAJO (CÓMO SE COMUNICAN LAS CAPAS)
+------------------------------------------------------------------------
+1. La UI (ej. producto_detalle_screen) solicita datos o realiza una acción.
+2. El Provider correspondiente (ej. InventarioProvider) hace una petición
+   HTTP (usando JWT Bearer) al backend de Django.
+3. El backend devuelve los datos en formato JSON.
+4. El Provider convierte el JSON a modelos de datos de Dart (models.dart).
+5. El Provider llama a 'notifyListeners()', avisando a la UI que los
+   datos cambiaron.
+6. La UI se redibuja automáticamente y muestra los nuevos datos.
+========================================================================

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:kreativ_flow/providers/product_provider.dart';
 import 'package:kreativ_flow/providers/cart_provider.dart';
-import 'package:kreativ_flow/data/models/producto_model.dart';
+import 'package:kreativ_flow/data/models/models.dart';
 import 'package:kreativ_flow/presentation/screens/cart/cart_screen.dart';
-import 'package:kreativ_flow/presentation/screens/products/product_detail_screen.dart';
+import 'package:kreativ_flow/presentation/screens/inventario/producto_detalle_screen.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({Key? key}) : super(key: key);
@@ -149,7 +149,7 @@ class _ProductCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => ProductDetailScreen(producto: producto)),
+          MaterialPageRoute(builder: (_) => ProductoDetalleScreen(productoId: producto.id)),
         );
       },
       child: Card(
@@ -161,9 +161,9 @@ class _ProductCard extends StatelessWidget {
             Expanded(
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                child: producto.imagenPrincipal != null
+                child: producto.imagenUrl != null
                     ? Image.network(
-                        producto.imagenPrincipal!,
+                        producto.imagenUrl!,
                         width: double.infinity,
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => const Center(child: Icon(Icons.image_not_supported)),
@@ -183,7 +183,7 @@ class _ProductCard extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text(
-                    producto.categoriaNombre,
+                    producto.categoriaNombre ?? '',
                     style: TextStyle(color: Colors.grey[600], fontSize: 12),
                   ),
                   const SizedBox(height: 8),
@@ -201,10 +201,10 @@ class _ProductCard extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.add_shopping_cart, color: Colors.blue, size: 24),
                         onPressed: () {
-                          if (producto.variantePrincipalId != null) {
+                          if (producto.variantePrincipalId != 0) {
                             print('DEBUG CATALOG - Añadiendo producto: ${producto.nombre} con variante: ${producto.variantePrincipalId}');
                             Provider.of<CartProvider>(context, listen: false)
-                                .addToCart(producto.variantePrincipalId!);
+                                .addToCart(producto.variantePrincipalId);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('¡${producto.nombre} añadido al carrito!'),

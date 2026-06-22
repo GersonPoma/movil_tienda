@@ -7,7 +7,7 @@ class SupplierService {
   final ApiService _apiService = ApiService();
 
   Future<List<Supplier>> getSuppliers() async {
-    final response = await _apiService.get(ApiConstants.suppliersEndpoint);
+    final response = await _apiService.get(ApiConstants.proveedoresEndpoint);
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(response.body);
       return jsonList.map((json) => Supplier.fromJson(json)).toList();
@@ -17,7 +17,7 @@ class SupplierService {
   }
 
   Future<Supplier> createSupplier(Supplier supplier) async {
-    final response = await _apiService.post(ApiConstants.suppliersEndpoint, supplier.toJson());
+    final response = await _apiService.post(ApiConstants.proveedoresEndpoint, supplier.toJson());
     if (response.statusCode == 201 || response.statusCode == 200) {
       return Supplier.fromJson(json.decode(response.body));
     } else {
@@ -26,7 +26,7 @@ class SupplierService {
   }
 
   Future<Supplier> updateSupplier(int id, Supplier supplier) async {
-    final response = await _apiService.put('${ApiConstants.suppliersEndpoint}$id/', supplier.toJson());
+    final response = await _apiService.put('${ApiConstants.proveedoresEndpoint}$id/', supplier.toJson());
     if (response.statusCode == 200) {
       return Supplier.fromJson(json.decode(response.body));
     } else {
@@ -35,7 +35,7 @@ class SupplierService {
   }
 
   Future<void> deleteSupplier(int id) async {
-    final response = await _apiService.delete('${ApiConstants.suppliersEndpoint}$id/');
+    final response = await _apiService.delete('${ApiConstants.proveedoresEndpoint}$id/');
     if (response.statusCode != 204 && response.statusCode != 200) {
       throw Exception('Failed to delete supplier');
     }

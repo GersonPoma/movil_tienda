@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:kreativ_flow/data/models/producto_model.dart';
+import 'package:kreativ_flow/data/models/models.dart';
 import 'package:kreativ_flow/data/services/api_service.dart';
 import 'package:kreativ_flow/core/constants/api_constants.dart';
 

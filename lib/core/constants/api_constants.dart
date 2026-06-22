@@ -1,7 +1,6 @@
 class ApiConstants {
   // URL configurable - cambia según tu entorno
-  static String baseUrl = 'http://10.0.2.2:8000/api'; // Android Emulator -> localhost
-  // Para dispositivo físico usar: 'http://192.168.X.X:8000/api'
+  static String baseUrl = 'https://pillips.campusflow.store/api'; // Servidor de producción (Tenant Pillips)
 
   // Auth
   static const String loginEndpoint = '/login/';
@@ -13,6 +12,8 @@ class ApiConstants {
   static const String productosEndpoint = '/productos/';
   static const String categoriasEndpoint = '/categorias/';
   static const String marcasEndpoint = '/marcas/';
+  static const String variantesEndpoint = '/variantes/';
+  static const String multimediosEndpoint = '/multimedios/';
 
   // Seguridad
   static const String usuariosEndpoint = '/usuarios/';
@@ -32,5 +33,7 @@ class ApiConstants {
   static const String empresaEndpoint = '/empresa/';
 
   // Reportes
-  static const String reportesEndpoint = '/reportes/';
+  static const String reporteVistasEndpoint = '/reporte/vistas/';
+  static const String reporteQbeEndpoint = '/reporte/qbe/';
+  static const String reporteNlpEndpoint = '/reporte/nlp/';
 }

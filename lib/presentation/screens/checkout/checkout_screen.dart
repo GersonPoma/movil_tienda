@@ -65,8 +65,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ...cartProvider.cartItems.map((item) {
                     final info = item['variante_producto_info'];
                     final nombre = info['producto_nombre'] ?? 'Producto';
-                    final precio = (info['precio'] as num).toDouble();
-                    final cantidad = item['cantidad'] as int;
+                    final precio = double.tryParse(info['precio']?.toString() ?? '0') ?? 0.0;
+                    final cantidad = int.tryParse(item['cantidad']?.toString() ?? '1') ?? 1;
                     
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -110,7 +110,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             }
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const PaymentScreen()),
+              MaterialPageRoute(builder: (_) => PaymentScreen(total: total)),
             );
           },
           child: const Text('CONTINUAR AL PAGO', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
